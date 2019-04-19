@@ -148,7 +148,9 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
         $path = $this->fullPathToView;
 
         if (!$this->fileSystem->exists($path)) {
-            throw new DomainException('The file [' . basename($path) . '] does not exist at the given path [' . $path . ']');
+            throw new DomainException(
+                'The file [' . basename($path) . '] does not exist at the given path [' . $path . ']'
+            );
         }
 
         $contents = $this->fileSystem->get($path);
