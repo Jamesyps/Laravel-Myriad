@@ -2,6 +2,7 @@
 
 namespace Jamesyps\Myriad\Tests;
 
+use Illuminate\Filesystem\Filesystem;
 use Jamesyps\Myriad\Contracts\ComponentInterface;
 use Jamesyps\Myriad\Contracts\ComponentRepositoryInterface;
 
@@ -22,9 +23,10 @@ class ComponentRepositoryTest extends MyriadTestCase
     public function testComponentsCanBeFound()
     {
         $result = $this->repository->all();
+        $files = $this->app->make(Filesystem::class)->allFiles($this->getViewPath());
 
         $this->assertIsArray($result);
-        $this->assertCount(3, $result);
+        $this->assertCount(count($files), $result);
     }
 
     public function testComponentsCanGroupByNamespace()
@@ -51,6 +53,28 @@ class ComponentRepositoryTest extends MyriadTestCase
         $this->assertArrayHasKey('nested.deep-nesting', $result);
     }
 
+    public function testComponentNamespaceHierarchy()
+    {
+        $result = $this->repository->namespaces();
+
+        $structure = [
+            '*'      => [
+                'key' => '*',
+            ],
+            'nested' => [
+                'key'      => 'nested',
+                'children' => [
+                    'deep-nesting' => [
+                        'key' => 'nested.deep-nesting',
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertIsArray($result);
+        $this->assertEquals($structure, $result);
+    }
+
     public function testComponentCanBeFoundByKey()
     {
         $keys = [
@@ -59,7 +83,7 @@ class ComponentRepositoryTest extends MyriadTestCase
             'nested.deep-nesting.panel',
         ];
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $result = $this->repository->findByKey($key);
 
             $this->assertInstanceOf(ComponentInterface::class, $result, $key);

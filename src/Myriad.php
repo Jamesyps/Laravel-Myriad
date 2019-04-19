@@ -7,7 +7,7 @@ use Jamesyps\Myriad\Contracts\ComponentRepositoryInterface;
 class Myriad
 {
 
-    public static function components(): array
+    public static function components(): ComponentRepositoryInterface
     {
         return app()->make(ComponentRepositoryInterface::class);
     }

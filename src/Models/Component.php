@@ -39,7 +39,7 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
         'slots',
         'variables',
         'text',
-        'viewPath'
+        'viewPath',
     ];
 
     /**
@@ -89,8 +89,20 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
      */
     private function getViewDirectoryPath(): string
     {
+        $path = collect(config('view.paths'))
+            ->map(function ($path) {
+                return realpath($path);
+            })
+            ->sortByDesc(function ($path) {
+                return strlen($path);
+            })
+            ->filter(function ($path) {
+                return Str::contains(config('myriad.directory'), $path);
+            })
+            ->first();
+
         return trim(
-            dirname(str_replace(resource_path('views'), '', $this->fullPathToView)),
+            dirname(str_replace($path, '', $this->fullPathToView)),
             '/'
         );
     }
@@ -110,7 +122,7 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
     }
 
     /**
-     * Returns the view path that can be used to within blade include / component directives
+     * Returns the view path that can be used within blade include / component directives
      *
      * @return string
      */
@@ -359,6 +371,16 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
         $method = 'get' . Str::studly($key);
 
         return method_exists($this, $method);
+    }
+
+    /**
+     * Convert the model to a string value
+     *
+     * @return false|string
+     */
+    public function __toString()
+    {
+        return $this->toJson();
     }
 }
 

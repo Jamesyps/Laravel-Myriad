@@ -11,15 +11,24 @@
     processIsolation="false"
     stopOnFailure="false"
 >
+
     <testsuites>
         <testsuite name="Myriad Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_DEBUG" value="true"/>
         <env name="APP_URL" value="http://localhost"/>
         <env name="APP_KEY" value="base64:m6DDXqn1EhtPENnYuKGdInEkLnlbW3v27y5wHJmaRg4="/>
     </php>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
 </phpunit>
