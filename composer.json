@@ -1,5 +1,5 @@
 {
-    "name": "jamesyps/myriad",
+    "name": "jamesyps/laravel-myriad",
     "description": "Provides a way of displaying the components available in your Laravel project",
     "keywords": [
         "laravel",
