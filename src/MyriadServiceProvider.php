@@ -2,8 +2,8 @@
 
 namespace Jamesyps\Myriad;
 
-use Carbon\Laravel\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 use Jamesyps\Myriad\Models\Component;
 use Jamesyps\Myriad\Contracts\ComponentInterface;
 use Jamesyps\Myriad\Facades\Myriad as MyriadFacade;
