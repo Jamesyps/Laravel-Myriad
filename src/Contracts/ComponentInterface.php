@@ -84,5 +84,4 @@ interface ComponentInterface
      * @return string|null
      */
     public function getText(): ?string;
-
 }

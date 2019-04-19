@@ -305,7 +305,6 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
         return collect($this->visibleAttributes)->mapWithKeys(function ($property) {
 
             return [Str::snake($property) => $this->{'get' . Str::studly($property)}()];
-
         })->toArray();
     }
 
@@ -383,4 +382,3 @@ class Component implements ComponentInterface, Arrayable, JsonSerializable, Json
         return $this->toJson();
     }
 }
-

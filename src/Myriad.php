@@ -21,5 +21,4 @@ class Myriad
     {
         return config('myriad.preview.js', []);
     }
-
 }

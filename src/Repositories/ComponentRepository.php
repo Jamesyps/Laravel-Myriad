@@ -84,7 +84,6 @@ class ComponentRepository implements ComponentRepositoryInterface
             $key = str_replace('.', '.children.', $component->namespace);
 
             Arr::set($namespaces, $key . '.key', $component->namespace);
-
         });
 
         return $namespaces;
@@ -115,13 +114,11 @@ class ComponentRepository implements ComponentRepositoryInterface
             $this->components = $paths->filter(function ($path) {
 
                 return Str::endsWith($path, '.blade.php');
-
             })->map(function ($path) {
 
                 return app()->makeWith(ComponentInterface::class, [
                     'fullPathToView' => $path,
                 ]);
-
             });
         }
     }
